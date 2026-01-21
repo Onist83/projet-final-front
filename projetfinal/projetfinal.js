@@ -119,7 +119,7 @@ document.getElementById("Button3").addEventListener("click" , function() {
     if (divContenu.textContent != "") {
         divContenu.textContent = ""
     } 
-    const newButton = document.createElement("Button4");
+    const newButton = document.createElement("button");
 newButton.textContent = "Emprunts en retard";
 document.body.appendChild(newButton);
 // Fetch pour emprunt
