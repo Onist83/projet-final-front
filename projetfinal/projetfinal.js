@@ -1,5 +1,6 @@
 // console.log("loaded")
 const divContenu = document.getElementById("contenu")
+const divContenuRetard = document.getElementById("contenuRetard");
 // console.log(divContenu.textContent == "");
 let mesLivres;
 
@@ -114,14 +115,33 @@ function afficherMembres(membre) {
 })
 
 let emprunts;
+// const dateRetour = new Date(emprunt.dateRetourPrevue);
+// const date2 = new Date();
+// const calculJoursRetard = date2 - dateRetour;
+// const joursEnRetard = Math.floor(calculJoursRetard / (1000 * 60 * 60 * 24));
 
 document.getElementById("Button3").addEventListener("click" , function() {
+    divContenuRetard.textContent = ""
     if (divContenu.textContent != "") {
         divContenu.textContent = ""
     } 
-    const newButton = document.createElement("button");
-newButton.textContent = "Emprunts en retard";
-document.body.appendChild(newButton);
+    
+    // Button pour afficher les emprunts en retard
+function showhide(){
+    let retard = document.getElementsByClassName("retard");
+    let length = retard.length;
+    
+    if (divContenuRetard.textContent != ""){
+    divContenuRetard.textContent = "";
+    }
+    else {
+        for (let i = 0; i < length; i++) {
+        divContenuRetard.appendChild(retard[i].cloneNode(true));
+        }  
+    }   
+}
+
+
 // Fetch pour emprunt
 fetch("http://localhost:8080/emprunts/en-cours")
     .then(response => {
@@ -142,24 +162,36 @@ fetch("http://localhost:8080/emprunts/en-cours")
     })
 
      // Function pour afficher les emprunts avec l'emprunteur
-function afficherEmprunt(emprunt) {
-    let empruntElement = document.createElement("div")
-    let dateEmpruntP = document.createElement("p")
-    dateEmpruntP.textContent = "Date de l'emprunt" + " " + emprunt.dateEmprunt + " " + "Par : " + " " + emprunt.membre.nom;
-    // let empruntP = document.createElement("p")
-    // empruntP.textContent = "Date de l'emprunt" + " " + emprunt.membre.nom;
-    empruntElement.appendChild(dateEmpruntP);
-    // empruntElement.appendChild(empruntP);
-    divContenu.appendChild(empruntElement);
+    function afficherEmprunt(emprunt) {
+        let empruntElement = document.createElement("div")
+        let dateEmpruntP = document.createElement("p")
+        console.log(emprunt.dateRetourPrevue)
+        console.log(new Date())
+        if (new Date (emprunt.dateRetourPrevue) < new Date() ) {
+            empruntElement.classList.add("retard")
+        } else {
+            empruntElement.classList.add("enCours")
+        } 
+
+        const dateRetour = new Date(emprunt.dateRetourPrevue);
+        const date2 = new Date();
+        const calculJoursRetard = date2 - dateRetour;
+        const joursEnRetard = Math.floor(calculJoursRetard / (1000 * 60 * 60 * 24));
+        
+        dateEmpruntP.textContent = "Date de l'emprunt" + " " + emprunt.dateEmprunt + " " + "Par : " + " " + emprunt.membre.nom + " " + joursEnRetard
+        // let empruntP = document.createElement("p")
+        // empruntP.textContent = "Date de l'emprunt" + " " + emprunt.membre.nom;
+        empruntElement.appendChild(dateEmpruntP);
+        // empruntElement.appendChild(empruntP);
+        divContenu.appendChild(empruntElement);
+        // divContenu.appenChild(empruntElement.classList(retard))
     }
+//      affiche les retards
+    const newButton = document.createElement("button");
+    newButton.textContent = "Emprunts en retard";   
+    newButton.setAttribute("id", "buttonRetard");
+    divContenu.appendChild(newButton);
+    document.getElementById("buttonRetard").addEventListener("click",showhide);
 })
 
 
-// if element == null
-// afficher element
-
-// if element == element
-// ne rien faire
-
-// sinon si element != null
-// remove puis afficher element
