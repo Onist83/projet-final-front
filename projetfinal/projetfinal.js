@@ -30,22 +30,24 @@ fetch("http://localhost:8080/livres/")
     // Function pour les livres pour tout afficher
 function afficherLivres(livre) {
     let livreElement = document.createElement("div")
+    livreElement.classList.add("conteneurLivre")
     let titreP = document.createElement("p")
-    titreP.textContent = livre.titre;
+    titreP.textContent = "Titre : " + " " + livre.titre;
     let auteurP = document.createElement("p")
-    auteurP.textContent = livre.auteur;
+    auteurP.textContent = "Auteur : " + " " + livre.auteur;
     let isbnP = document.createElement("p")
-    isbnP.textContent = livre.isbn;
+    isbnP.textContent = "ISBN : " + " " + livre.isbn;
     // livreElement.textContent = livre.titre + " ISBN: " + livre.isbn;
     // isbnP.classList.add("titre")
     let anneePublicationP = document.createElement("p")
-    anneePublicationP.textContent = livre.anneePublication;
+    anneePublicationP.textContent = "Publié en " + " " + livre.anneePublication;
     let categorieP = document.createElement("p")
-    categorieP.textContent = livre.categorie;
+    categorieP.textContent = "Catégorie : " + " " + livre.categorie;
     let exemplairesTotalP = document.createElement("p")
-    exemplairesTotalP.textContent = livre.exemplairesTotal;
+    exemplairesTotalP.textContent = livre.exemplairesTotal + " " + " exemplaires total";
     let exemplairesDisponiblesP = document.createElement("p")
-    exemplairesDisponiblesP.textContent = livre.exemplairesDisponibles;
+    exemplairesDisponiblesP.textContent = livre.exemplairesDisponibles + " " + " exemplaires disponibles";
+    
     // let empruntsP = document.createElement("p")
     // empruntsP.textContent = "Date de l'emprunt : " + livre.emprunts[0].dateEmprunt + " " + "Date de retour prévue : " + livre.emprunts[0].dateRetourEffective ;
     livreElement.appendChild(titreP);
@@ -90,18 +92,19 @@ fetch("http://localhost:8080/membres/")
     // Function pour afficher les membres et ses attributs
 function afficherMembres(membre) {
     let membreElement = document.createElement("div")
+    membreElement.classList.add("conteneurMembre")
     let nomP = document.createElement("p")
-    nomP.textContent = membre.nom;
+    nomP.textContent = "Nom : " + " " + membre.nom;
     let prenomP = document.createElement("p")
-    prenomP.textContent = membre.prenom;
+    prenomP.textContent = "Prenom : " + " " + membre.prenom;
     let emailP = document.createElement("p")
-    emailP.textContent = membre.email;
+    emailP.textContent = "Email : " + " " + membre.email;
     let telephoneP = document.createElement("p")
-    telephoneP.textContent = membre.telephone;
+    telephoneP.textContent = "Telephone : " + " " + membre.telephone;
     let dateInscriptionP = document.createElement("p")
-    dateInscriptionP.textContent = membre.dateInscription;
+    dateInscriptionP.textContent = "Date d'inscription : " + " " + membre.dateInscription;
     let actifP = document.createElement("p")
-    actifP.textContent = membre.actif;
+    actifP.textContent = "Membre actif : " + " " + membre.actif;
     membreElement.appendChild(nomP);
     membreElement.appendChild(prenomP);
     membreElement.appendChild(emailP);
@@ -164,6 +167,7 @@ fetch("http://localhost:8080/emprunts/en-cours")
      // Function pour afficher les emprunts avec l'emprunteur
     function afficherEmprunt(emprunt) {
         let empruntElement = document.createElement("div")
+        empruntElement.classList.add("conteneurEmprunt")
         let dateEmpruntP = document.createElement("p")
         console.log(emprunt.dateRetourPrevue)
         console.log(new Date())
@@ -178,7 +182,7 @@ fetch("http://localhost:8080/emprunts/en-cours")
         const calculJoursRetard = date2 - dateRetour;
         const joursEnRetard = Math.floor(calculJoursRetard / (1000 * 60 * 60 * 24));
         
-        dateEmpruntP.textContent = "Date de l'emprunt" + " " + emprunt.dateEmprunt + " " + "Par : " + " " + emprunt.membre.nom + " " + joursEnRetard
+        dateEmpruntP.textContent = "Date de l'emprunt" + " " + emprunt.dateEmprunt + " " + "Par : " + " " + emprunt.membre.nom + ", " + " " + joursEnRetard + " " + " jours d'emprunts en plus "
         // let empruntP = document.createElement("p")
         // empruntP.textContent = "Date de l'emprunt" + " " + emprunt.membre.nom;
         empruntElement.appendChild(dateEmpruntP);
